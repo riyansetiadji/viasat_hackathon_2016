@@ -1,0 +1,35 @@
+{% extends "main.html" %} 
+{% block title %}Events{% endblock %} 
+{% block head %}
+<meta id="username" data-username="{{username}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/welcome.css') }}">
+{% endblock %} 
+{% block bodyContent %}
+<div id="events" class="col-md-4">
+    <!-- <div id="listContainer"> -->
+    <h1 id="event-header" class="animated slideInDown wow">My Events</h1>
+    <ul class="list-group">
+        {% for event in all_events %}
+        <div data-lng="{{event.longitude}}" data-lat="{{event.latitude}}" class="anEvent">
+            <li class="list-group-item animated slideInUp wow hover-event">
+                {% if event.id is creator%}
+                <button data-event-id="{{event.id}}" class="deleteEvent btn btn-danger btn-xs pull-right">Remove</button>
+                {% endif %}
+                <h4>{{event.name}}</h3>
+                    <h5>{{event.date}}</h4>
+                <p>{{event.description}}</p>
+            </li>
+        </div>
+        {% endfor %}
+    </ul>
+    <!-- </div> -->
+</div>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<div id="map" class="col-md-8"></div>
+
+{% endblock %} {% block js %}
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUp0Wl9tjhZgUSxz9oXmODMuEp20vKHVo&libraries=places"> -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUp0Wl9tjhZgUSxz9oXmODMuEp20vKHVo&libraries=places"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/welcome.js')}}"></script>
+
+{% endblock %}

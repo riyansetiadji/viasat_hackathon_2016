@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+
+    <title>3Weeks - Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ionicons.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+<body>
+
+  <!-- Pre-loader -->
+  <div class="preloader">
+     <div class="status">&nbsp;</div>
+  </div>
+
+
+  <!-- HOME -->
+  <section class="home bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          <div class="home-wrapper">
+            <h1 class="animated fadeInDown wow" data-wow-delay=".1s">Login</h1>
+            <br>
+            <br>
+            <!--
+            <h4 class="animated fadeInDown wow" data-wow-delay=".2s">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat arcu ut orci porta, eget porttitor felis suscipit.<br/> Sed a nisl ullamcorper, tempus augue at, rutrum lacus. Duis et turpis eros.</h4>
+            -->
+
+            <div class="row">
+              <div class="col-sm-10 col-sm-offset-1">
+                <form class="form" name="login" action="" method="post" id="loginForm" >
+                  <input type="text" class="form-control input-box" placeholder="Username" name="username" required="required">
+                  <br>
+                  <input type="password" name="password" placeholder="Password" required class="form-control input-box">
+                  <br>
+                  <button type="submit" value="Login" class="btn btn-custom btn-subscribe">Login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END HOME -->
+
+
+  <!-- CLIENTS -->
+  <section class="clients bg-gray">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <div class="brand-item animated fadeInLeft wow" data-wow-delay=".1s">
+            <a href="https://www.viasat.com/"><img alt="01 brand" src="{{ url_for('static', filename='img/ViaSat-Logo-Large.svg')}}" class="viasat-logo"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- END CLIENTS -->
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.easing.1.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/SmoothScroll.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/wow.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.app.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
+                                                      
+    
+  </body>
+</html>

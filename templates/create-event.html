@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+{% block title %}Create Event{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/create-event.css') }}">{% endblock %}
+
+{% block bodyContent %}
+
+      <div id = "events" class="col-md-4">
+          <div id="form-container">
+        <form name="createform" method="post" class="form-horizontal">
+            <div class="form-group">
+                <h1>Create Event</h1><br><br>
+                <label for="name" class="animated fadeInLeft wow">Name of Event:</label>
+                <input id="name" type="text" name="eventName" placeholder="Name of the Event" required class="form-control animated fadeInLeft wow">
+                <br>
+                <label for="description" class="animated fadeInLeft wow">Description:</label>
+                <textarea class="form-control animated fadeInLeft wow" rows="5" id="description" placeholder="Description ..."></textarea>
+                <br>
+                <label for="groupid" class="animated fadeInLeft wow">Group: </label>
+                <select id="groupid" class="form-control animated fadeInLeft wow">
+                    {% for group in all_groups %}
+                    <option value="{{group.id}}">{{group.name}}</option>
+                    {% endfor %}
+                </select>
+                </br>
+                <br>
+                <label for="date" class="animated fadeInLeft wow">Date of the Event:</label>
+                <input id="date" type="datetime-local" name="eventDate" required class="form-control animated fadeInLeft wow">
+                <br>
+                <center>
+                    <button type="button" id="submitButton" class="btn btn-primary animated fadeInLeft wow">Submit</button>
+                </center>
+            </div>
+        </form>
+    </div>
+      </div>
+       <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+      <div id="map" class="col-md-8"></div>
+
+<div id = "map"></div>
+{% endblock %}
+{% block js %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUp0Wl9tjhZgUSxz9oXmODMuEp20vKHVo&libraries=places"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/create-event.js')}}"></script>
+{% endblock %}

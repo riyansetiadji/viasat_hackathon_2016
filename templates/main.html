@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title%}{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ViaSat Summer Intern Hackathon Project - Team 3 Weeks">
+    <meta name="author" content="Riyan Setiadji, Anthony Black, and Ian Kane">
+
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ionicons.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/threeweeks.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home"><img src="{{url_for('static', filename='img/logo.png') }}"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="viasat-blue">
+             <li><a href="{{url_for('home')}}">Events</a></li>
+             <li><a href="{{url_for('schedule_event')}}">Create Event</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Group <span class="caret viasat-blue"></span></a>
+                <ul class="dropdown-menu">
+                  {% for group in groups %}
+                    <li><a href="{{url_for('group', group_name=group.name)}}">{{group.name}}</li>
+                  {% endfor %}
+                  <li role="separator" class="divider"></li>
+                  <li><a href="{{url_for('start_group')}}">Create Group</a></li>
+                </ul>
+              </li>
+                 
+
+          </ul>
+      </div>
+    </nav>
+</header>
+{% block bodyContent %}{% endblock %}
+</body>
+
+<!-- JS Files -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js')}}"></script>
+
+{% block js %}
+{% endblock %}
+</html>

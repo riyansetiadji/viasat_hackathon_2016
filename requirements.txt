@@ -1,0 +1,6 @@
+flask
+flask-socketio
+flask_login
+flask-googlemaps
+sqlalchemy-utils
+eventlet

@@ -1,0 +1,149 @@
+{% extends "main.html" %}
+{% block title %}Group{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/welcome.css') }}">
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            namespace = '/test';
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+
+            socket.on('connect', function() {
+                socket.emit('join', {room: "{{group_name}}" }); //Replace By Group ID
+                return false;
+            });
+
+            socket.on('my response', function(msg) {
+                if(msg.data.includes("In rooms")){
+                    data = msg.data.split(" ");
+                    var lgth = 0;
+                    var longest;
+                    var longest_index;
+
+                    for(var i=0; i < data.length; i++){
+                        if(data[i].length > lgth){
+                            var lgth = data[i].length;
+                            longest = data[i];
+                            longest_index = i
+                        }
+                    }
+                    data.splice(longest_index, 1);
+                    console.log(data.join(" "));
+                    var my_data = data.join(" ").replace(/,/g, "");
+                    $('#log').append("<br><b>" + msg.user+"</b>:    "+ my_data);
+                    //$('#log').append('<br>' + $('<div/>').text( '<b>' + msg.user + '</b>' + ': ' + data.join(" ").replace(/,/g, "")).html());
+                }
+                else{
+                    $('#log').append("<br><b>" + msg.user+"</b>:    "+ msg.data);
+                }
+            });
+
+            $('#send_to_room').click(function(event) {
+                socket.emit('my room event', {room: "{{group_name}}" , data: $('#room_data').val()});
+                $('#room_data').val("");
+                return false;
+            });
+
+            $('#add_members').click(function(){
+                var username = $("#userToAdd").val();
+                var groupname = "{{group_name}}";
+                if(username==""){
+                    alert("Please enter username.")
+                    return;
+                }
+                else{
+                    $.ajax({
+                        type: "POST",
+                        url: "/addUser",
+                        data: JSON.stringify({username:username, groupname:groupname}),
+                        contentType: "application/json",
+                        success: function(data){
+                            alert("Added user");
+                            location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <style type="text/css">
+        #log{
+            background-color: #eceff1; 
+            height:75%; 
+            border:#015594 solid 2px; 
+            padding-left:2%;
+        }
+    </style>
+{%endblock%}
+
+{%block bodyContent %}
+<div id = "events" class="col-md-4 animated fadeInLeft wow">
+    <form action="" method=post enctype=multipart/form-data>
+        <h1>Group Details</h1><br><br>
+        <div class="form-group">
+            <label for="group_name">Group Name:</label>
+            <input type="text" data-group-id="{{group_object.id}}" class="form-control" name="group_name" id="group_name" value="{{group_name}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="group_name">Description:</label>
+            <textarea class="form-control" rows=3 id="group_description" readonly>{{group_object.description}}</textarea>
+        </div>
+    </form>
+
+        <b><p style="padding-right:25px;">Members:
+
+        </p></b>
+        <ul class="list-group">
+            {%for member in group_object.members %}
+                <li class="list-group-item">
+                {{member.username}}
+                </li>
+            {%endfor%}
+        </ul>
+        <label for="userToAdd" style="margin-right:5px;">Add User: </label>
+        <input type="text" class="form-control" id="userToAdd" placeholder="username" style="width:60%;display: inline-block;"></input>
+        <button class="btn btn-primary btn-xs pull-right" value="Add Members" id="add_members" style="margin-top: 2%;margin-right:5%;">Add</button>
+        <br>
+        <br>
+        <br>
+        <center>
+                <button data-username="{{username}}" data-user-id="{{userid}}" data-group-id="{{group_object.id}}" class="btn btn-danger" value="Leave Group" id="leave_group">Leave Group</button>
+        </center>
+        <br>
+        <br>
+</div>
+
+      <div id="map" class="col-md-8" style="position: relative;">
+            <div id="log" class="animated fadeInDown wow"></div>
+            <div style="position:absolute; bottom: 20px; width:97%" class="animated fadeInUp wow">
+                <form id="send_room" method="POST" action='#'>
+                    <div class="form-group">
+                        <textarea class="form-control" rows=3 name="room_data" id="room_data" placeholder="Message ..."></textarea>
+                    </div>
+                    <button type="submit" class="btn  btn-primary" value="Send to Room" id="send_to_room">Send</button>
+                </form>
+            </div>
+      </div>
+{%endblock%}
+
+{%block js %}
+<script type="text/javascript">
+    $('#leave_group').click(function(){
+        var userId = $(this).attr('data-user-id');
+        var groupId = $(this).attr('data-group-id');
+        var username = $(this).attr('data-username');
+        var data = {'userId':userId, 'groupId':groupId, 'username':username};
+        $.ajax({
+            type: "POST",
+            url: "{{url_for('leave_group')}}",
+            contentType:'application/json',
+            data: JSON.stringify(data),
+            success: function(data){
+                window.location.href = "http://localhost:5000/home"
+            }
+        });
+    });
+</script>
+{%endblock%}
